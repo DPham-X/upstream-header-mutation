@@ -1,0 +1,24 @@
+services:
+  envoy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8080
+    networks:
+      - bridge
+
+  mockwebserver:
+    image: kennethreitz/httpbin
+    networks:
+      - bridge
+    expose:
+      - 80
+
+networks:
+  bridge:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24
+          gateway: 192.168.100.1
